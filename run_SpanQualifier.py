@@ -789,7 +789,7 @@ if __name__ == '__main__':
             best_dev_result = result_score_dev
             best_dev_acc = f1
             save_model(output_model_path, model, optimizer)
-            save_dataset(path_save_result + '/valid.json', results_dev)
+            save_dataset(path_save_result + '/dev.json', results_dev)
             print('save new best')
             result_score_test, results_test = evaluate(model, test_examples, args.eval_batch_size, args.max_len,
                                                    golds_answers=golds_answers_test)
