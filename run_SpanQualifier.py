@@ -644,7 +644,7 @@ if __name__ == '__main__':
                         help="Total number of training epochs to perform.")
     parser.add_argument('--seed',
                         type=int,
-                        default=1,
+                        default=0,
                         help="random seed for initialization")
 
     args = parser.parse_args()
