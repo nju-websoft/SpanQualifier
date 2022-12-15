@@ -597,16 +597,16 @@ if __name__ == '__main__':
                         default='bert-base-uncased',
                         type=str)
     parser.add_argument("--data_path_train",
-                        default='./data/in_hourse/MultiSpanQA/train.json',
-                        # default='./data/in_hourse/MultiSpanQA_E/train.json',
+                        default='./data/in_house/MultiSpanQA/train.json',
+                        # default='./data/in_house/MultiSpanQA_E/train.json',
                         type=str)
     parser.add_argument("--data_path_dev",
-                        default='./data/in_hourse/MultiSpanQA/valid.json',
-                        # default='./data/in_hourse/MultiSpanQA_E/valid.json',
+                        default='./data/in_house/MultiSpanQA/valid.json',
+                        # default='./data/in_house/MultiSpanQA_E/valid.json',
                         type=str)
     parser.add_argument("--data_path_test",
-                        default='./data/in_hourse/MultiSpanQA/test.json',
-                        # default='./data/in_hourse/MultiSpanQA_E/test.json',
+                        default='./data/in_house/MultiSpanQA/test.json',
+                        # default='./data/in_house/MultiSpanQA_E/test.json',
                         type=str)
     parser.add_argument("--results_save_path",
                         default='./results/',
@@ -661,8 +661,8 @@ if __name__ == '__main__':
         name += '_msqa'
     else:
         name += '_msqa'
-    if 'office' in args.data_path_train:
-        name += '_office'
+    if 'official' in args.data_path_train:
+        name += '_official'
     dim2 = 64
     dim1 = 768
     if 'large' in name:
@@ -692,7 +692,7 @@ if __name__ == '__main__':
     model = SpanQualifier(args.model_path, max_span_gap, dim1, dim2, args.max_len, vanilla).to(device)
 
     print('max_span_gap:', max_span_gap)
-    if 'in_hourse' in args.data_path_test:
+    if 'in_house' in args.data_path_test:
         test_examples, _ = feature_preprocress(test_examples, tokenizer, do_train=True)
     else:
         test_examples, _ = feature_preprocress(test_examples, tokenizer, do_train=False)
