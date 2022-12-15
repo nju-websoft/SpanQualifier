@@ -649,7 +649,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "4"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
     vanilla = False
     force_answer = True
     only_eval = False
