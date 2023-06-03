@@ -632,7 +632,7 @@ if __name__ == '__main__':
 
     data_path_base = f'./data/{args.dataset_split}/{args.dataset_name}/'
     data_path_train = f'{data_path_base}/train.json'
-    data_path_dev = f'{data_path_base}/dev.json'
+    data_path_dev = f'{data_path_base}/valid.json'
     data_path_test = f'{data_path_base}/test.json'
 
     os.makedirs(path_save_result, exist_ok=True)

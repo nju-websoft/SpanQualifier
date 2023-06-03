@@ -17,7 +17,7 @@ python run_SpanQualifier.py \
 
 After training, the program will evaluate SpanQualifier and will report the scores of Exact Match F1 (EM) and Partial Match F1 (PM) on the dev and test sets.
 
-The predictions on the dev and test sets will be saved in `/results/Model_Name/HyperParameters/dev.json` and  `/results/Model_Name/HyperParameters/test.json`, where the file structure is as follows:
+The predictions on the dev and test sets will be saved in `/results/Dataset_Name/Model_Name/HyperParameters/dev.json` and  `/results/Dataset_Name/Model_Name/HyperParameters/test.json`, where the file structure is as follows:
 ```json
 [
     {
@@ -33,5 +33,5 @@ The predictions on the dev and test sets will be saved in `/results/Model_Name/H
 ]
 ```
 
-The checkpoint of SpanQualifier will be saved in `/outputs/Model_Name/HyperParameters/pytorch_model.bin`.
+The checkpoint of SpanQualifier will be saved in `/outputs/Dataset_Name/Model_Name/HyperParameters/pytorch_model.bin`.
 

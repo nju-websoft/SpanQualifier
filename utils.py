@@ -5,9 +5,14 @@ import torch
 import numpy as np
 import random
 import re
+from eval_script import get_entities
 
-
-
+def read_dataset(path):
+    f = open(path, 'r', encoding='utf-8')
+    dataset = json.load(f)
+    if 'data' in dataset:
+        dataset = dataset['data']
+    return dataset
 def save_dataset(path, dataset):
     with open(path, 'w', encoding='utf-8') as f:
         json.dump(dataset, f, ensure_ascii=False, indent=2)
@@ -141,12 +146,82 @@ def split_sequence(bert_output_word_q, background_range, useSep=True, set_max_le
     sequence_new = sequence_new.view(batch, max_len, dim)
     return sequence_new, mask
 
+def read_quoref(path):
+    dataset = read_dataset(path)
+    dataset_new = []
+    for sample in dataset:
+        paragraphs = sample['paragraphs']
+        for p_samples in paragraphs:
+            context = p_samples['context']
+            qas = p_samples['qas']
+            for qa_sample in qas:
+                question = qa_sample['question']
+                id = qa_sample['id']
+                answers = qa_sample['answers']
+                answers = sorted(answers, key=lambda x: x['answer_start'])
+                answers_idx = []
+                answers_text = []
+                for answer_item in answers:
+                    text = answer_item['text']
+                    answer_start = answer_item['answer_start']
+                    answer_end = answer_start + len(text)
+                    answers_idx.append([answer_start, answer_end])
+                    assert context[answer_start: answer_end] == text
+                    answers_text.append(text)
+                dataset_new.append({
+                    'id': id,
+                    'question': question,
+                    'context': context,
+                    'answers': answers_text,
+                    'answers_idx': answers_idx
+                })
+    return dataset_new
 
-def read_dataset(path):
-    f = open(path, 'r', encoding='utf-8')
-    dataset = json.load(f)
-    dataset = dataset['data']
-    return dataset
+
+
+def read_msqa(path):
+    dataset = read_dataset(path)
+    dataset_new = []
+    for sample in dataset:
+        id = sample['id']
+        question = sample['question']
+        context = sample['context']
+        label = sample['label']
+        answers_w_idx = get_entities(label, context)
+        answers_w_idx = sorted(answers_w_idx, key=lambda x: x[1])
+        answers = [item[0] for item in answers_w_idx]
+        context_char = ""
+        context_char_idx_beg, context_char_idx_end = [], []
+        beg_idx = 0
+        for word in context:
+            context_char_idx_beg.append(beg_idx)
+            context_char_idx_end.append(beg_idx + len(word))
+            beg_idx += len(word) + 1
+            context_char += word + ' '
+        context_char = context_char.strip()
+
+        answers_idx_char = []
+        for ans, beg_idx, end_idx in answers_w_idx:
+            # if context_char[context_char_idx_beg[beg_idx]: context_char_idx_end[end_idx]] != ans:
+            #     print(context_char[context_char_idx_beg[beg_idx]: context_char_idx_end[end_idx]])
+            #     print(ans)
+            assert context_char[context_char_idx_beg[beg_idx]: context_char_idx_end[end_idx]] == ans
+            answers_idx_char.append([
+                context_char_idx_beg[beg_idx],
+                context_char_idx_end[end_idx],
+            ])
+        dataset_new.append({
+            'id': id,
+            'question': ' '.join(question),
+            'context': context_char,
+            'answers': answers,
+            'answers_idx': answers_idx_char
+        })
+    return dataset_new
+
+
+
+
 
 def save_model(output_model_file, model, optimizer):
     os.makedirs(output_model_file, exist_ok=True)
