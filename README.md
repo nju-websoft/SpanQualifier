@@ -2,7 +2,7 @@
 
 # SpanQualifier
 
-This is a pytorch version of SpanQualifier, your can find The implementation of MindSpore 2.0 in [here](https://github.com/nju-websoft/SpanQualifier/tree/main/MindSpore)
+This is a pytorch version of SpanQualifier, your can find the implementation based on MindSpore 2.0 in [here](https://github.com/nju-websoft/SpanQualifier/tree/main/MindSpore)
 
 Code for "Spans, Not Tokens: A Span-Centric Model for Multi-Span Reading
 Comprehension" (CIKM 2023)
