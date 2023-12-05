@@ -4,8 +4,7 @@
 
 This is a pytorch version of SpanQualifier, your can find the implementation based on MindSpore 2.0 in [here](https://github.com/nju-websoft/SpanQualifier/tree/main/MindSpore)
 
-Code for "Spans, Not Tokens: A Span-Centric Model for Multi-Span Reading
-Comprehension" (CIKM 2023)
+Code for [Spans, Not Tokens: A Span-Centric Model for Multi-Span Reading Comprehension ](https://dl.acm.org/doi/abs/10.1145/3583780.3615064) (CIKM 2023)
 
 ![model](MindSpore/model.png)
 
