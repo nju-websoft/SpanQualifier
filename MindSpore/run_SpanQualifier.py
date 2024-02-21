@@ -1,5 +1,5 @@
 # coding=utf-8
-from mindnlp.transforms import BertTokenizer
+from mindnlp.transformers import BertTokenizer
 from mindnlp.models import BertModel
 import mindspore
 import mindspore.nn as nn
